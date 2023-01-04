@@ -18,3 +18,5 @@ jobs:
           if [ "$USERNAME" == "HENRICKE" ]
           then
             echo "hiiiiiiiiiiiiii"
+          fi
+        
