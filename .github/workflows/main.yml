@@ -45,5 +45,7 @@ jobs:
             IdentityFile ~/.ssh/staging.key
             StrictHostKeyChecking no
           END          
-          
+
+      - name: Say Hello
+        run: echo Oii
 
