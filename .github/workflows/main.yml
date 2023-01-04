@@ -38,9 +38,4 @@ jobs:
           echo "$SSH_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${HOST} '
           
-          cd /home/ubuntu/CounterApp &&
-          git checkout master &&
-          git fetch --all &&
-          git reset --hard origin/master &&
-          git pull origin master &&
-          docker-compose -f docker-compose.prod.yml up -d --build
+          cd /home/ubuntu/CounterApp &
