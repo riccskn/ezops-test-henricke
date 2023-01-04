@@ -15,8 +15,5 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
-          if [ "$USERNAME" == "HENRICKE" ]
-          then
-            echo "hiiiiiiiiiiiiii"
-          fi
+             echo oiiiii
         
