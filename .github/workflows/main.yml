@@ -46,6 +46,13 @@ jobs:
             StrictHostKeyChecking no
           END          
 
-      - name: Say Hello
-        run: ssh staging 'echo Oii'
+      - name: Stop the server
+        run: ssh staging 'sudo systemctl stop my-application'
+
+      - name: Check out the source
+        run: ssh staging 'cd my-application && git fetch && git reset --hard origin/master'
+
+      - name: Start the server
+        if: ${{ always() }}
+        run: ssh staging 'sudo systemctl start my-application'
 
