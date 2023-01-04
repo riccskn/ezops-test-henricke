@@ -23,4 +23,6 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker image
-        run: docker rmi -f $(docker images -aq) | docker build . --file Docker --tag $DOCKER_USER/devops-test:212323
+        run: |
+         docker rmi -f $(docker images -aq) 
+         docker build . --file Docker --tag $DOCKER_USER/devops-test:212323
