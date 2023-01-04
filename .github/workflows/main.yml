@@ -45,3 +45,6 @@ jobs:
             IdentityFile ~/.ssh/github-actions-key
             StrictHostKeyChecking no
           END
+
+      - name: List home directory
+        run: ssh ec2 'ls -la'
