@@ -9,6 +9,10 @@ env:
   DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+  USER: ${{ secrets.EC2_REMOTE_HOST }}
+  HOST: ${{ secrets.EC2_USER }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -29,14 +33,17 @@ jobs:
           push: true
           tags: riccskn/devops-test:latest
 
-      - name: Deploy to server
-        uses: easingthemes/ssh-deploy@main
-        env:
-         SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
-         ARGS: "-rltgoDzvO --delete"
-         SOURCE: "./"
-         REMOTE_HOST: ${{secrets.EC2_REMOTE_HOST}}
-         REMOTE_USER: ${{secrets.EC2_USER}}
-         TARGET: "/home/ubuntu"
-         EXCLUDE: "/dist/, /node_modules/, **.env, rebuild_app.sh, watcher.sh"
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/staging.key
+          chmod 600 ~/.ssh/staging.key
+          cat >>~/.ssh/config <<END
+          Host staging
+            HostName $HOST
+            User $USER
+            IdentityFile ~/.ssh/staging.key
+            StrictHostKeyChecking no
+          END          
+          
 
