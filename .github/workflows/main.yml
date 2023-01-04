@@ -35,5 +35,13 @@ jobs:
 
       - name: Configure SSH
         run: |
-          echo "${SSH_KEY}" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${HOST} '
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/authorized_keys
+          chmod 600 ~/.ssh/authorized_keys
+          cat >>~/.ssh/config <<END
+          Host ec2
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/github-actions-key
+            StrictHostKeyChecking no
+          END
