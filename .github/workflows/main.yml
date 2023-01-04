@@ -40,8 +40,8 @@ jobs:
           chmod 600 ~/.ssh/github-actions-key
           cat >>~/.ssh/config <<END
           Host ec2
-            HostName ${HOST}
-            User ${USER}
+            HostName ec2-3-18-111-48.us-east-2.compute.amazonaws.com
+            User ubuntu
             IdentityFile ~/.ssh/github-actions-key
             StrictHostKeyChecking no
           END
