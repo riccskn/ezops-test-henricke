@@ -47,5 +47,5 @@ jobs:
           END          
 
       - name: Say Hello
-        run: echo Oii
+        run: ssh staging 'echo Oii'
 
