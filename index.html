@@ -41,13 +41,13 @@
     }
 
     function getMessages(){
-      $.get('http://localhost:3001/messages', (data) => {
+      $.get('http://localhost:80/messages', (data) => {
         data.forEach(addMessages);
       })
     }
 
     function sendMessage(message){
-      $.post('http://localhost:3001/messages', message)
+      $.post('http://localhost:80/messages', message)
     }
 </script>
 </body>
