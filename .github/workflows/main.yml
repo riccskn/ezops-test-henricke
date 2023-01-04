@@ -23,6 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build Docker image
-        run: |
-         docker rmi -f $(docker images -aq) 
-         docker build -t riccskn/devops-test
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: riccskn/devops-test:latest
