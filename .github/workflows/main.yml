@@ -19,6 +19,6 @@ jobs:
       - name: Container registry setup
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-           username: ${{ env.DOCKER_USER }}
-           password: ${{ env.DOCKER_PASSWORD }}
+          username: riccskn
+          password: b7m30c500
         
