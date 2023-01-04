@@ -15,5 +15,5 @@ jobs:
         env:
           USERNAME: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
-             echo "$USERNAME"
+             echo $USERNAME
         
