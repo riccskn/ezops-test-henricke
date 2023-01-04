@@ -34,6 +34,7 @@ jobs:
           tags: riccskn/devops-test:latest
 
       - name: Configure SSH
+        run: | 
           echo "$SSH_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${HOST} '
           
