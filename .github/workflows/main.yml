@@ -35,4 +35,4 @@ jobs:
 
       - name: Configure SSH
         run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          echo "$SSH_KEY" > private_key && chmod 600 private_key
