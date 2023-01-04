@@ -12,5 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Build & Push Image
+        env:
+          USERNAME: ${{ secrets.DOCKER_HUB_PASSWORD }}
         run: |
           echo "${{ secrets.DOCKER_HUB_USERNAME }}"
