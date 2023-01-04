@@ -34,25 +34,12 @@ jobs:
           tags: riccskn/devops-test:latest
 
       - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-          Host staging
-            HostName $HOST
-            User $USER
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
-          END          
-
-      - name: Stop the server
-        run: ssh staging 'sudo systemctl stop my-application'
-
-      - name: Check out the source
-        run: ssh staging 'cd my-application && git fetch && git reset --hard origin/master'
-
-      - name: Start the server
-        if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start my-application'
-
+          echo "$SSH_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${HOST} '
+          
+          cd /home/ubuntu/CounterApp &&
+          git checkout master &&
+          git fetch --all &&
+          git reset --hard origin/master &&
+          git pull origin master &&
+          docker-compose -f docker-compose.prod.yml up -d --build
