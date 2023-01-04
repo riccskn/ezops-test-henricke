@@ -13,6 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+
       - name: Check out the repo
         uses: actions/checkout@v1
 
@@ -22,8 +23,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Build Docker image
+      - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           push: true
           tags: riccskn/devops-test:latest
+
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@main
+        env:
+         SSH_PRIVATE_KEY: ${{secrets.EC2_SSH_KEY}}
+         ARGS: "-rltgoDzvO --delete"
+         SOURCE: "./"
+         REMOTE_HOST: ${{secrets.REMOTE_HOST}}
+         REMOTE_USER: ${{secrets.EC2_USER}}
+         TARGET: ${{secrets.TARGET_DIR}}
+         EXCLUDE: "/dist/, /node_modules/, **.env, rebuild_app.sh, watcher.sh"
+
