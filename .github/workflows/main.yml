@@ -35,4 +35,13 @@ jobs:
 
       - name: Configure SSH
         run: |
-          ls
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/github-actions-key
+          chmod 600 ~/.ssh/github-actions-key
+          cat >>~/.ssh/config <<END
+          Host ec2
+            HostName $HOST
+            User $USER
+            IdentityFile ~/.ssh/github-actions-key
+            StrictHostKeyChecking no
+          END
