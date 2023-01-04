@@ -40,8 +40,8 @@ jobs:
           chmod 600 ~/.ssh/github-actions-key
           cat >>~/.ssh/config <<END
           Host ec2
-            HostName $HOST
-            User $USER
+            HostName ${HOST}
+            User ${USER}
             IdentityFile ~/.ssh/github-actions-key
             StrictHostKeyChecking no
           END
