@@ -35,16 +35,6 @@ jobs:
 
       - name: Configure SSH
         run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/authorized_keys
-          chmod 600 ~/.ssh/authorized_keys
-          cat >>~/.ssh/config <<END
-          Host ec2
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/github-actions-key
-            StrictHostKeyChecking no
-          END
-
-      - name: List home directory
-        run: ssh ec2 'ls -la'
+          cd ~/.ssh/
+          pwd
+          ls
