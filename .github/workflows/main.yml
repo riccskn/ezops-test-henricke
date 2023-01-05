@@ -48,5 +48,4 @@ jobs:
 
       - name: Deploy EC2
         run: |
-          docker stop $(docker ps --filter status=running -q)
-          docker run -dp 80:3001 riccskn/devops-test:latest
+           docker kill $(docker ps -q)
