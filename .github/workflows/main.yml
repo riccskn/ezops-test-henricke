@@ -4,12 +4,6 @@ on:
   push:
     branches: [ main ]
 
-env:
-
-  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-  HOST: ${{ secrets.EC2_REMOTE_HOST }}
-  USER: ${{ secrets.EC2_USER }}
-
 jobs:
   build:
     runs-on: ubuntu-latest
