@@ -1,29 +1,28 @@
 name: Deployment
-
-on:
+'on':
   push:
-    branches: [ main ]
-
+    branches:
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-
       - name: Check out the repo
         uses: actions/checkout@v1
 
-      - name: Container registry setup
+      - name: Login into Docker Hub
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          username: ${{ secrets.DOCKER_HUB_USER }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          username: '${{ secrets.DOCKER_HUB_USER }}'
+          password: '${{ secrets.DOCKER_HUB_PASSWORD }}'
 
-      - name: Build and push Docker image
+      - name: Build and push image
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest
-
+          tags: >-
+            ${{ secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY
+            }}:latest
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
@@ -37,12 +36,15 @@ jobs:
             StrictHostKeyChecking no
           END
 
-      - name: Removing the old
+      - name: Remove the old image
         run: |
-           ssh ec2 'docker rm -f test'
-           ssh ec2 'docker rmi -f ${{ secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest'
+          ssh ec2 'docker rm -f test'
 
+          ssh ec2 'docker rmi -f ${{ secrets.DOCKER_HUB_USER }}/${{
+          secrets.DOCKER_HUB_REPOSITORY }}:latest'
 
-      - name: Create a new
+      - name: Create a new image and run
         run: |
-          ssh ec2 'docker run --name=test -p 80:3001 -d ${{ secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY }}:latest'
+          ssh ec2 'docker run --name=test -p 80:3001 -d ${{
+          secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY
+          }}:latest'
