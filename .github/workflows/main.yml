@@ -6,11 +6,6 @@ on:
 
 env:
 
-  DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
-  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-
-  REPO_NAME: ${{ secrets.DOCKER_HUB_REPOSITORY }}
-
   SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
   HOST: ${{ secrets.EC2_REMOTE_HOST }}
   USER: ${{ secrets.EC2_USER }}
@@ -38,12 +33,12 @@ jobs:
       - name: Configure SSH
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/github-actions-key
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/github-actions-key
           chmod 600 ~/.ssh/github-actions-key
           cat >>~/.ssh/config <<END
           Host ec2
-            HostName $HOST
-            User $USER
+            HostName ${{ secrets.EC2_REMOTE_HOST }}
+            User ${{ secrets.EC2_USER }}
             IdentityFile ~/.ssh/github-actions-key
             StrictHostKeyChecking no
           END
