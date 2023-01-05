@@ -48,8 +48,8 @@ jobs:
 
       - name: Removing the old
         run: |
-           ssh ec2 'docker rm -f ${{ env.REPO_NAME }}'
+           ssh ec2 'docker rm -f test'
 
       - name: Create a new
         run: |
-          ssh ec2 'docker run --name=${{ env.REPO_NAME }} -p 80:3001 -d riccskn/devops-test:latest'
+          ssh ec2 'docker run --name=test -p 80:3001 -d riccskn/devops-test:latest'
