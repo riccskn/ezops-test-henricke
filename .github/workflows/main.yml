@@ -46,6 +46,10 @@ jobs:
             StrictHostKeyChecking no
           END
 
-      - name: Deploy EC2
+      - name: Removing the old
         run: |
-           docker kill $(docker ps -q)
+           ssh ec2 'docker rm -f ${{ env.REPO_NAME }}'
+
+      - name: Create a new
+        run: |
+          ssh ec2 'docker run --name=${{ env.REPO_NAME }} -p 80:3001 -d riccskn/devops-test:latest'
