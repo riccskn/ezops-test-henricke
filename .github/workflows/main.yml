@@ -48,7 +48,8 @@ jobs:
 
       - name: Removing the old
         run: |
-           ssh ec2 'docker rmi riccskn/devops-test'
+           ssh ec2 'docker rm -f test'
+           ssh ec2 'docker rmi -f riccskn/devops-test'
 
 
       - name: Create a new
