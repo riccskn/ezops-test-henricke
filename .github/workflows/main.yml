@@ -48,6 +48,5 @@ jobs:
 
       - name: Deploy EC2
         run: |
-          docker stop $(docker ps -aq)
-          docker rm $(docker ps -aq)
+          docker rm -f
           docker run -dp 80:3001 riccskn/devops-test:latest
