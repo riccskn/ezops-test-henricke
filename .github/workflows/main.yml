@@ -6,8 +6,10 @@ on:
 
 env:
 
-  DOCKER_USER: ${{ secrets.DOCKER_HUB_USER }}
-  DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  REPO_NAME: ${{ secrets.DOCKER_HUB_REPOSITORY }}
 
   SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
   HOST: ${{ secrets.EC2_REMOTE_HOST }}
@@ -24,14 +26,14 @@ jobs:
       - name: Container registry setup
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+          username: ${ DOCKER_HUB_USER }
+          password: ${ DOCKER_HUB_PASSWORD }
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: riccskn/devops-test:latest
+          tags: ${ DOCKER_HUB_USER }/${ REPO_NAME }:latest
 
       - name: Configure SSH
         run: |
@@ -49,9 +51,9 @@ jobs:
       - name: Removing the old
         run: |
            ssh ec2 'docker rm -f test'
-           ssh ec2 'docker rmi -f riccskn/devops-test'
+           ssh ec2 'docker rmi -f ${ DOCKER_HUB_USER }/${ REPO_NAME }:latest'
 
 
       - name: Create a new
         run: |
-          ssh ec2 'docker run --name=test -p 80:3001 -d riccskn/devops-test:latest'
+          ssh ec2 'docker run --name=test -p 80:3001 -d ${ DOCKER_HUB_USER }/${ REPO_NAME }:latest'
