@@ -41,13 +41,13 @@
     }
 
     function getMessages(){
-      $.get('http://3.18.111.48:3001/messages', (data) => {
+      $.get('http://3.18.111.48:80/messages', (data) => {
         data.forEach(addMessages);
       })
     }
 
     function sendMessage(message){
-      $.post('http://3.18.111.48:3001/messages', message)
+      $.post('http://3.18.111.48:80/messages', message)
     }
 </script>
 </body>
