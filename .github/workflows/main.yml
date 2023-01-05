@@ -45,5 +45,9 @@ jobs:
             IdentityFile ~/.ssh/github-actions-key
             StrictHostKeyChecking no
           END
-      - name: List home directory
-        run: ssh ec2 'ls -la'
+
+      - name: Deploy EC2
+        run: |
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+          docker run -dp 80:3001 riccskn/devops-test:latest
