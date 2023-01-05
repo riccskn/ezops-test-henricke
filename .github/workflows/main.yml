@@ -4,6 +4,17 @@ on:
   push:
     branches: [ main ]
 
+env:
+
+  DOCKER_HUB_USER: ${{ secrets.DOCKER_HUB_USER }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+  REPO_NAME: ${{ secrets.DOCKER_HUB_REPOSITORY }}
+
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+  HOST: ${{ secrets.EC2_REMOTE_HOST }}
+  USER: ${{ secrets.EC2_USER }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
