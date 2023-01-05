@@ -48,7 +48,6 @@ jobs:
 
       - name: Removing the old
         run: |
-           ssh ec2 'docker rm -f test'
            ssh ec2 'docker rmi $(docker images | grep 'test')'
 
 
