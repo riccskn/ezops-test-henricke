@@ -37,6 +37,7 @@ app.post('/messages', async (req, res) => {
 
     if (message.message == "say my name") {
       message.message = "Heisenberg"
+      console.log("nome heisenberg")
     }
 
     var savedMessage = await message.save()
