@@ -49,7 +49,7 @@ app.post('/messages', async (req, res) => {
       if(censored)
         await Message.remove({_id: censored.id})
       else
-        io.emit('message', req.body);
+        io.emit('message', message);
       res.sendStatus(200);
   }
   catch (error){
