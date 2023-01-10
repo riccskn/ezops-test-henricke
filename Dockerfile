@@ -2,8 +2,6 @@ FROM node:alpine3.16
 
 EXPOSE 3001
 
-RUN mkdir -p /usr/src/app
-
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app/
