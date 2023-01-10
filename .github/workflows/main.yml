@@ -38,13 +38,13 @@ jobs:
 
       - name: Remove the old image
         run: |
-          ssh ec2 'docker rm -f test'
+          ssh ec2 'docker rm -f ${{ secrets.APP_NAME }}'
 
           ssh ec2 'docker rmi -f ${{ secrets.DOCKER_HUB_USER }}/${{
           secrets.DOCKER_HUB_REPOSITORY }}:latest'
 
       - name: Create a new image and run
         run: |
-          ssh ec2 'docker run --name=test -p 80:3001 -d ${{
+          ssh ec2 'docker run --name=${{ secrets.APP_NAME }} -p 80:3001 -d ${{
           secrets.DOCKER_HUB_USER }}/${{ secrets.DOCKER_HUB_REPOSITORY
           }}:latest'
