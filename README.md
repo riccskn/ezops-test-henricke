@@ -1,5 +1,6 @@
-# simple-chat
-A simple chat application in nodejs and mongodb
+My challenge was:
 
-Read
-https://medium.com/@amkurian/simple-chat-application-in-node-js-using-express-mongoose-and-socket-io-ee62d94f5804
+- Create a EC2 Instance on AWS.
+- Setup Docker on it.
+- Make a Dockerfile for my Node App.
+- Create a pipeline which should build and push the image to DockerHub and deploy the new image on my server.
